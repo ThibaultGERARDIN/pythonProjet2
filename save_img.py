@@ -6,7 +6,7 @@ def save_img(book_title, image_url, category_name):
     """ 
     Function used to save the image of a book in the images folder with the title of the book as name 
     """
-    
+
     # Creates the name of the image file out of title of book (replacing all "problematic" characters)
     img_name = book_title.lower().replace(' ','_').replace(':','_').replace('/','_').replace('\\','_').replace('"','').replace('<','_').replace('>','_').replace('?','').replace('*','').replace('|','_')
     # Creates subfolder name out of category name
@@ -14,6 +14,8 @@ def save_img(book_title, image_url, category_name):
     # Creates the path of the image file to save
     img_path = './images/' + sub_folder
     # Creates a sub folder for the category (if it doesn't exist yet)
+    if not os.path.isdir('./images'):
+         os.makedirs('./images')
     if not os.path.isdir(img_path):
         os.makedirs(img_path)
     # Creates the full path

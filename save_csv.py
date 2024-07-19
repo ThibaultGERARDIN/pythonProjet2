@@ -1,12 +1,16 @@
 import csv
+import os
 
-def save_csv(file_name, current_category_infos):
-    
+def save_csv(category_name, current_category_infos):
+
     """
     Function used to save "current_category_info" in a "file_name.csv" file located in csv_files folder 
     """
+    if not os.path.isdir('./csv_files'):
+        os.makedirs('./csv_files')
+    file_path = './csv_files/' + category_name.lower().replace(' ','_') + '.csv'
 
-    with open(file_name, 'w', newline='', encoding="utf-8") as fichier_csv:
+    with open(file_path, 'w', newline='', encoding="utf-8") as fichier_csv:
             headers = [
                 'product_page_url', 
                 'universal_ product_code', 

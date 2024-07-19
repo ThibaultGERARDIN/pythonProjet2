@@ -12,9 +12,8 @@ for category in categories_list:
     
     # Gets the url of the category page
     category_url = category['category_url']
-    # gets the name of the category to construct the name of the csv file to save in csv_files folder
+    # gets the name of the category (used for the csv file and image folder)
     category_name = category['category_name']
-    file_name = './csv_files/' + category_name.lower().replace(' ','_') + '.csv'
     # extracts the urls of all the books in the category
     books_urls = extract_books_urls(category_url)
     # loops on the list of urls to extract the informations and store them in the current category info list
@@ -26,7 +25,7 @@ for category in categories_list:
         image_url = book_info['image_url']
         save_img(book_title, image_url, category_name)
     # saves all of the gathered information in a csv file
-    save_csv(file_name, current_category_infos)
+    save_csv(category_name, current_category_infos)
 
     
 

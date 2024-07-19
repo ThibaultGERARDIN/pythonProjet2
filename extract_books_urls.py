@@ -1,10 +1,13 @@
-# Script qui extrait les urls de tous les livres d'une catégorie donnéeet les renvoie dans une liste
-
 from bs4 import BeautifulSoup
 import requests
 
 
 def extract_books_urls(category_url):
+    
+    """
+    Function used to extract the urls of all the books in the given category (category_url)
+    Returns a list of all urls
+    """
 
     # Initialize the parameters :
     # Gets the url of the category we're scraping
@@ -45,11 +48,12 @@ def extract_books_urls(category_url):
             books_list = soup.find_all('div', class_='image_container')
             next = soup.find('li', class_='next')
         # makes the script loop the last page (the while loop breaks on last page, because "next" doesn't exist anymore)
-        else:
-            for book in books_list:
-                book_relative_url = book.a['href']
-                book_url = book_relative_url.replace('../../..', 'http://books.toscrape.com/catalogue')
-                books_urls.append(book_url)
+       
+        for book in books_list:
+            book_relative_url = book.a['href']
+            book_url = book_relative_url.replace('../../..', 'http://books.toscrape.com/catalogue')
+            books_urls.append(book_url)
+
     # If next doesn't exist then loops the current page
     else:
         for book in books_list:

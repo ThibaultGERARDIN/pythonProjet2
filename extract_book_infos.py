@@ -1,9 +1,22 @@
-# Script qui extrait les informations d'un livre et les renvoie dans un dictionnaire
-
 from bs4 import BeautifulSoup
 import requests
 
 def extract_book_infos(book_url):
+    
+    """
+    Function used to extract the information of the book from "book_url" page of Books To Scrape
+    It will return a dictionnary of all the information gathered, with the headers :
+    'product_page_url'
+    'universal_ product_code'
+    'title'
+    'price_including_tax'
+    'price_excluding_tax'
+    'number_available'
+    'product_description'
+    'category'
+    'review_rating'
+    'image_url'
+    """
 
     product_page_url = book_url
     page = requests.get(product_page_url)
@@ -25,14 +38,26 @@ def extract_book_infos(book_url):
     number_available = int(''.join(filter(str.isdigit, availability)))
 
     # gets the title from h1 tag
-    title = soup.h1.string
+    if soup.h1:
+        title = soup.h1.string
+    else:
+        title = "N/A"
     # gets the description from the only p tag without a class (using index 0 to extract the text)
-    product_description = soup.find_all('p', class_='')[0].get_text()
+    if soup.find_all('p', class_=''):
+        product_description = soup.find_all('p', class_='')[0].get_text()
+    else:
+        product_description = "N/A"
     # gets the category from the links at the top
-    category = soup.find_all('li')[2].a.get_text()
+    if soup.find_all('li'):
+        category = soup.find_all('li')[2].a.get_text().strip()
+    else:
+        category = "N/A"
     # gets the image url from its src attribute
-    image_relative_url = soup.find('img')['src']
-    image_url = image_relative_url.replace('../../', 'http://books.toscrape.com/')
+    if soup.find('img'):
+        image_relative_url = soup.find('img')['src']
+        image_url = image_relative_url.replace('../../', 'http://books.toscrape.com/')
+    else:
+        image_url = "N/A"
 
 
 

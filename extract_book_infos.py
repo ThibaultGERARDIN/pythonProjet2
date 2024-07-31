@@ -30,8 +30,8 @@ def extract_book_infos(book_url):
         td_list.append(td.string)
 
     upc = td_list[0]
-    price_including_tax = td_list[2]
-    price_excluding_tax = td_list[3]
+    price_excluding_tax = td_list[2]
+    price_including_tax = td_list[3]
 
     # gets the number available from the availability string
     availability = td_list[5]
